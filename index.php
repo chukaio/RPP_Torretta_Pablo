@@ -16,7 +16,7 @@ switch ($path) {
         if ($method == 'POST') {
             //
             echo "Probando Postman";
-            echo "Testeando2";
+            echo "Testeando3";
         }
         else if ($method == 'GET'){
             //
