@@ -1,15 +1,66 @@
 <?php
 
-//require __DIR__ . "/vendor/autoload.php";
-//require_once "";
+require_once __DIR__ . "/include/archivo.php";
+require_once __DIR__ . "/include/token.php";
 
-$path = $_SERVER['PATH_INFO'] ?? "";
-$method = $_SERVER['REQUEST_METHOD'];
+$pathInfo = explode("/", $_SERVER['PATH_INFO']);
+$path = $pathInfo[1];
+$method = $_SERVER['REQUEST_METHOD'] ?? "";
+
+//$patente = $pathInfo[2];
 
 echo $path . " y " . $method . "<br>";
 
 switch ($path) {
-    case '/':
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
         if ($method == 'POST') {
             //
         }
