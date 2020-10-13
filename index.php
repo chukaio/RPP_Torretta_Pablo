@@ -15,8 +15,8 @@ switch ($path) {
     case 'registro':
         if ($method == 'POST') {
             //
-            echo "Probando Postman";
-            echo "Testeando55";
+            echo "Probando Postman<br>";
+            echo "Testeando666<br>";
         }
         else if ($method == 'GET'){
             //
