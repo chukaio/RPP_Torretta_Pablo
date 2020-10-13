@@ -14,7 +14,23 @@ echo $path . " y " . $method . "<br>";
 switch ($path) {
     case '':
         if ($method == 'POST') {
+            //01 --> 
+        }
+        else if ($method == 'GET'){
             //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //01 --> 
+        }
+        else if ($method == 'GET'){
+            //
+        }
+    break;
+    case '':
+        if ($method == 'POST') {
+            //01 --> 
         }
         else if ($method == 'GET'){
             //
@@ -25,23 +41,7 @@ switch ($path) {
             //
         }
         else if ($method == 'GET'){
-            //
-        }
-    break;
-    case '':
-        if ($method == 'POST') {
-            //
-        }
-        else if ($method == 'GET'){
-            //
-        }
-    break;
-    case '':
-        if ($method == 'POST') {
-            //
-        }
-        else if ($method == 'GET'){
-            //
+            //01 --> 
         }
     break;
     case '':
