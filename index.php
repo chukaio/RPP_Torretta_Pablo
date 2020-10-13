@@ -41,11 +41,10 @@ switch ($path) {
                     echo "Error al cargar la imagen.";
                 }
             }
-        }
-        else if ($method == 'GET'){
+        } else if ($method == 'GET') {
             //
         }
-    break;
+        break;
     case 'login':
         if ($method == 'POST') {
             //02 --> Los usuarios deberán loguearse y se les devolverá un token con email y tipo en caso de estar registrados, caso contrario se informará el error.
@@ -67,26 +66,25 @@ switch ($path) {
             }
             echo "Login inválido";
             fclose($fileData);
-        }
-        else if ($method == 'GET'){
+        } else if ($method == 'GET') {
             //
         }
-    break;
+        break;
     case 'vehiculo':
         if ($method == 'POST') {
             //03 --> Se deben guardar los siguientes datos: marca, modelo, patente y precio. Los datos se guardan en el archivo de texto vehiculos.xxx, tomando la patente como identificador(la patente no puede estar repetida).
             $userData = Token::decode($_SERVER['HTTP_TOKEN']);
-            $marca = $_POST['marca']?? "";
-            $modelo = $_POST['modelo']?? "";
-            $patente = $_POST['patente']?? "";
-            $precio = $_POST['precio']?? "";
+            $marca = $_POST['marca'] ?? "";
+            $modelo = $_POST['modelo'] ?? "";
+            $patente = $_POST['patente'] ?? "";
+            $precio = $_POST['precio'] ?? "";
             if ($userData == null) {
                 echo "Token inválido.";
                 die();
             } else {
-                if(archivo::locateValInFile("vehiculos.json","patente",$patente)){
+                if (archivo::locateValInFile("vehiculos.json", "patente", $patente)) {
                     echo "El auto que desea ingresar ya se encuentra cargado.";
-                }else{
+                } else {
                     $datos = array(
                         "marca" => $marca,
                         "modelo" => $modelo,
@@ -95,43 +93,67 @@ switch ($path) {
                     );
                     archivo::saveAsJson("archivos/vehiculos.json", $datos);
                     echo "Auto ingresado correctamente.";
-                }                                                                                           
-            }        
-        }
-        else if ($method == 'GET'){
+                }
+            }
+        } else if ($method == 'GET') {
             //
         }
-    break;
+        break;
+    case 'patente':
+        if ($method == 'POST') {
+            //
+        } else if ($method == 'GET') {
+            //04 --> Se ingresa marca, modelo o patente, si coincide con algún registro del archivo se retorna las ocurrencias, si no coincide se debe retornar “No existe xxx” (xxx es lo que se buscó) La búsqueda tiene que ser case insensitive.
+            $patente = $pathInfo[2];
+            echo $patente . "<br>";
+
+            $datosAuto = array();
+            $userData = Token::decode($_SERVER['HTTP_TOKEN']);
+            if ($userData == null) {
+                echo "Token inválido.";
+                die();
+            }
+            $fileData = fopen("./archivos/vehiculos.json", "r");
+            while ($json = archivo::readFileLineJson($fileData)) {
+                if (archivo::locateValInFile("vehiculos.json", "patente", $patente)) {
+                    array_push($datosAuto, $json);
+                    break;
+                }
+            }
+            fclose($fileData);
+            if (count($datosAuto)==0) {
+                echo "No se encuentra ningun vehiculo con dicha patente.";
+            } else {                
+                foreach ($datosAuto as $index => $auto) {                    
+                    echo "---------------------------<br>";
+                    echo ("Marca: $auto->marca \n") . "<br>";
+                    echo ("Modelo: $auto->modelo \n") . "<br>";
+                    echo ("Patente: $auto->patente \n") . "<br>";
+                    echo ("Precio: $auto->precio \n") . "<br>";
+                    echo "---------------------------<br>";
+                }
+            }
+        }
+        break;
     case '':
         if ($method == 'POST') {
             //
-        }
-        else if ($method == 'GET'){
+        } else if ($method == 'GET') {
             //
         }
-    break;
+        break;
     case '':
         if ($method == 'POST') {
             //
-        }
-        else if ($method == 'GET'){
+        } else if ($method == 'GET') {
             //
         }
-    break;
+        break;
     case '':
         if ($method == 'POST') {
             //
-        }
-        else if ($method == 'GET'){
+        } else if ($method == 'GET') {
             //
         }
-    break;
-    case '':
-        if ($method == 'POST') {
-            //
-        }
-        else if ($method == 'GET'){
-            //
-        }
-    break;
+        break;
 }
