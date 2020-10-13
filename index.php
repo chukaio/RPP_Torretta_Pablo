@@ -72,9 +72,31 @@ switch ($path) {
             //
         }
     break;
-    case '':
+    case 'vehiculo':
         if ($method == 'POST') {
-            //
+            //03 --> Se deben guardar los siguientes datos: marca, modelo, patente y precio. Los datos se guardan en el archivo de texto vehiculos.xxx, tomando la patente como identificador(la patente no puede estar repetida).
+            $userData = Token::decode($_SERVER['HTTP_TOKEN']);
+            $marca = $_POST['marca']?? "";
+            $modelo = $_POST['modelo']?? "";
+            $patente = $_POST['patente']?? "";
+            $precio = $_POST['precio']?? "";
+            if ($userData == null) {
+                echo "Token inválido.";
+                die();
+            } else {
+                if(archivo::locateValInFile("vehiculos.json","patente",$patente)){
+                    echo "El auto que desea ingresar ya se encuentra cargado.";
+                }else{
+                    $datos = array(
+                        "marca" => $marca,
+                        "modelo" => $modelo,
+                        "patente" => $patente,
+                        "precio" => $precio
+                    );
+                    archivo::saveAsJson("archivos/vehiculos.json", $datos);
+                    echo "Auto ingresado correctamente.";
+                }                                                                                           
+            }        
         }
         else if ($method == 'GET'){
             //
