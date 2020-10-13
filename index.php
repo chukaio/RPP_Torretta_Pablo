@@ -12,9 +12,10 @@ $method = $_SERVER['REQUEST_METHOD'] ?? "";
 echo $path . " y " . $method . "<br>";
 
 switch ($path) {
-    case '':
+    case 'registro':
         if ($method == 'POST') {
             //
+            echo "Probando Postman";
         }
         else if ($method == 'GET'){
             //
