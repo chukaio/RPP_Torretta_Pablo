@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "75f32d5d-60a4-4ec1-b307-9420345db317",
+		"name": "P3 Parcial C",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Punto 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "pepe2@pepe.com",
+							"type": "text"
+						},
+						{
+							"key": "tipo",
+							"value": "user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678912",
+							"type": "text"
+						},
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/pmtor/Desktop/01.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/registro",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"registro"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "pepe@pepe.com",
+							"disabled": true
+						},
+						{
+							"key": "tiposuario",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "12345678912",
+							"disabled": true
+						},
+						{
+							"key": "foto",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "pepe2@pepe.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678912",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/login",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "marca",
+							"value": "Fiat",
+							"type": "text"
+						},
+						{
+							"key": "modelo",
+							"value": "Duna",
+							"type": "text"
+						},
+						{
+							"key": "patente",
+							"value": "abb123",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "75000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/vehiculo",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"vehiculo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Ruta}}/patente/bbb123",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"patente",
+						"bbb123"
+					],
+					"query": [
+						{
+							"key": "marca",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "modelo",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 5",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "tipo",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "666",
+							"type": "text"
+						},
+						{
+							"key": "demora",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/servicio",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"servicio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "patente",
+							"value": "bbb123",
+							"type": "text"
+						},
+						{
+							"key": "fecha",
+							"value": "12/05/2020",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/turno",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"turno"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Punto 7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/pmtor/Desktop/02.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Ruta}}/stats?tipo=10000",
+					"host": [
+						"{{Ruta}}"
+					],
+					"path": [
+						"stats"
+					],
+					"query": [
+						{
+							"key": "tipo",
+							"value": "10000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
