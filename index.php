@@ -122,7 +122,7 @@ switch ($path) {
             }
             fclose($fileData);
             if (count($datosAuto)==0) {
-                echo "No se encuentra ningun vehiculo con dicha patente.";
+                echo "No existe ningun vehiculo con la patente \"".$patente."\"";
             } else {                
                 foreach ($datosAuto as $index => $auto) {                    
                     echo "---------------------------<br>";
@@ -135,9 +135,35 @@ switch ($path) {
             }
         }
         break;
-    case '':
+    case 'servicio':
         if ($method == 'POST') {
-            //
+            //05 --> Se recibe el nombre del servicio a realizar: id, tipo(de los 10.000km, 20.000km, 50.000km), precio y demora, y se guardará en el archivo tiposServicio.xxx.
+            $userData = Token::decode($_SERVER['HTTP_TOKEN']);
+            
+            $id = $_POST['id'] ?? "";
+            $tipo = $_POST['tipo'] ?? "";            
+            $precio = $_POST['precio'] ?? "";
+            $demora = $_POST['demora'] ?? "";
+            if ($userData == null) {
+                echo "Token inválido.";
+                die();
+            } else {                
+                if (archivo::locateValInFile("tiposServicio.json", "id", $id)) {
+                    echo "El servicio que desea ingresar ya se encuentra cargado.";
+                } else {
+                    if($tipo != "10000" && $tipo != "20000" && $tipo != "50000"){
+                        $tipo = "";
+                    }
+                    $datos = array(
+                        "id" => $id,
+                        "tipo" => $tipo,
+                        "precio" => $precio,
+                        "demora" => $demora
+                    );
+                    archivo::saveAsJson("archivos/tiposServicio.json", $datos);
+                    echo "Servicio ingresado correctamente.";
+                }
+            }        
         } else if ($method == 'GET') {
             //
         }
