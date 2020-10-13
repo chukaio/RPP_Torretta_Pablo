@@ -186,7 +186,7 @@ switch ($path) {
                 while ($json = archivo::readFileLineJson($fileData)) {
                     if (archivo::locateValInFile("vehiculos.json", "patente", $patente)) {
                         //array_push($datosAuto, $json);
-                        $datosAuto= $json;
+                        $datosAuto = $json;
                         break;
                     }
                 }
@@ -195,24 +195,24 @@ switch ($path) {
                 while ($json = archivo::readFileLineJson($fileData2)) {
                     if (archivo::locateValInFile("tiposServicio.json", "id", $id)) {
                         //array_push($datosTurno, $json);
-                        $datosTurno= $json;
+                        $datosTurno = $json;
                         break;
                     }
                 }
                 fclose($fileData2);
-                if(is_null($datosAuto) || is_null($datosTurno)){
-                    if(is_null($datosAuto)){
-                        echo "La patente \"".$patente."\" no existe";
-                    }else if(is_null($datosTurno)){
+                if (is_null($datosAuto) || is_null($datosTurno)) {
+                    if (is_null($datosAuto)) {
+                        echo "La patente \"" . $patente . "\" no existe";
+                    } else if (is_null($datosTurno)) {
                         echo "No hay cupo disponible";
                     }
-                }else{
+                } else {
                     $datos = array(
                         "fecha" => $fecha,
                         "patente" => $patente,
                         "marca" => $datosAuto->marca,
                         "modelo" => $datosAuto->modelo,
-                        "precio" =>$datosAuto->precio,
+                        "precio" => $datosAuto->precio,
                         "tipo" => $datosTurno->tipo
                     );
                     archivo::saveAsJson("archivos/turnos.json", $datos);
@@ -228,7 +228,30 @@ switch ($path) {
         if ($method == 'POST') {
             //
         } else if ($method == 'GET') {
-            //07 -->
+            //07 --> Puede recibir el tipo de servicio, si lo incluye, muestra un listado con los servicios de ese tipo realizados, si no muestra todos los servicios.
+            $userData = Token::decode($_SERVER['HTTP_TOKEN']);
+            $tipo = $_GET['tipo'] ?? "";
+            if ($userData == null) {
+                echo "Token inválido.";
+                die();
+            } else {
+                if ($userData->tipo != "admin") {
+                    echo "Se requiere permisos de tipo admin";
+                } else {
+                    if (empty($_GET['tipo'])) {
+                        //getall
+                    } else {
+                        if ($tipo != "10000" && $tipo != "20000" && $tipo != "50000") {
+                            $tipo = "";
+                        }
+                        if ($tipo == "") {
+                            //getall
+                        } else {
+                            //get specific
+                        }
+                    }
+                }
+            }
         }
         break;
 }
