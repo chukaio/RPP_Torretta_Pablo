@@ -121,10 +121,10 @@ switch ($path) {
                 }
             }
             fclose($fileData);
-            if (count($datosAuto)==0) {
-                echo "No existe ningun vehiculo con la patente \"".$patente."\"";
-            } else {                
-                foreach ($datosAuto as $index => $auto) {                    
+            if (count($datosAuto) == 0) {
+                echo "No existe ningun vehiculo con la patente \"" . $patente . "\"";
+            } else {
+                foreach ($datosAuto as $index => $auto) {
                     echo "---------------------------<br>";
                     echo ("Marca: $auto->marca \n") . "<br>";
                     echo ("Modelo: $auto->modelo \n") . "<br>";
@@ -139,19 +139,19 @@ switch ($path) {
         if ($method == 'POST') {
             //05 --> Se recibe el nombre del servicio a realizar: id, tipo(de los 10.000km, 20.000km, 50.000km), precio y demora, y se guardará en el archivo tiposServicio.xxx.
             $userData = Token::decode($_SERVER['HTTP_TOKEN']);
-            
+
             $id = $_POST['id'] ?? "";
-            $tipo = $_POST['tipo'] ?? "";            
+            $tipo = $_POST['tipo'] ?? "";
             $precio = $_POST['precio'] ?? "";
             $demora = $_POST['demora'] ?? "";
             if ($userData == null) {
                 echo "Token inválido.";
                 die();
-            } else {                
+            } else {
                 if (archivo::locateValInFile("tiposServicio.json", "id", $id)) {
                     echo "El servicio que desea ingresar ya se encuentra cargado.";
                 } else {
-                    if($tipo != "10000" && $tipo != "20000" && $tipo != "50000"){
+                    if ($tipo != "10000" && $tipo != "20000" && $tipo != "50000") {
                         $tipo = "";
                     }
                     $datos = array(
@@ -163,23 +163,72 @@ switch ($path) {
                     archivo::saveAsJson("archivos/tiposServicio.json", $datos);
                     echo "Servicio ingresado correctamente.";
                 }
-            }        
+            }
         } else if ($method == 'GET') {
             //
         }
         break;
-    case '':
+    case 'turno':
         if ($method == 'POST') {
-            //
+            //06 --> Se recibe patente y fecha (día) y se debe guardar en el archivo turnos.xxx, fecha, patente, marca, modelo, precio y tipo de servicio. Si no hay cupo o la patente no existe informar cada caso particular.
+            $userData = Token::decode($_SERVER['HTTP_TOKEN']);
+            $id = $_POST['id'] ?? "";
+            $patente = $_POST['patente'] ?? "";
+            $fecha = $_POST['fecha'] ?? "";
+            if ($userData == null) {
+                echo "Token inválido.";
+                die();
+            } else {
+                $datosAuto = null; //array();
+                $datosTurno = null; //array();
+
+                $fileData = fopen("./archivos/vehiculos.json", "r");
+                while ($json = archivo::readFileLineJson($fileData)) {
+                    if (archivo::locateValInFile("vehiculos.json", "patente", $patente)) {
+                        //array_push($datosAuto, $json);
+                        $datosAuto= $json;
+                        break;
+                    }
+                }
+                fclose($fileData);
+                $fileData2 = fopen("./archivos/tiposServicio.json", "r");
+                while ($json = archivo::readFileLineJson($fileData2)) {
+                    if (archivo::locateValInFile("tiposServicio.json", "id", $id)) {
+                        //array_push($datosTurno, $json);
+                        $datosTurno= $json;
+                        break;
+                    }
+                }
+                fclose($fileData2);
+                if(is_null($datosAuto) || is_null($datosTurno)){
+                    if(is_null($datosAuto)){
+                        echo "La patente \"".$patente."\" no existe";
+                    }else if(is_null($datosTurno)){
+                        echo "No hay cupo disponible";
+                    }
+                }else{
+                    $datos = array(
+                        "fecha" => $fecha,
+                        "patente" => $patente,
+                        "marca" => $datosAuto->marca,
+                        "modelo" => $datosAuto->modelo,
+                        "precio" =>$datosAuto->precio,
+                        "tipo" => $datosTurno->tipo
+                    );
+                    archivo::saveAsJson("archivos/turnos.json", $datos);
+                    echo "Turno reservado correctamente.";
+                }
+            }
         } else if ($method == 'GET') {
             //
+
         }
         break;
-    case '':
+    case 'stats':
         if ($method == 'POST') {
             //
         } else if ($method == 'GET') {
-            //
+            //07 -->
         }
         break;
 }
